@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: lift_log_android
     steps:
       - uses: actions/checkout@v4
 
@@ -35,12 +38,12 @@ jobs:
           python3 make_icons.py
 
       - name: Build the APK
-        working-directory: android
+        working-directory: lift_log_android/android
         run: ./gradlew assembleDebug
 
       - name: Upload the APK
         uses: actions/upload-artifact@v4
         with:
           name: lift_log_apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: lift_log_android/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
